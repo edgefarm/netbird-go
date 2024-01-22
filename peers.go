@@ -23,7 +23,7 @@ import (
 	"strings"
 )
 
-type Groups struct {
+type PeerGroup struct {
 	ID         string `json:"id,omitempty"`
 	Name       string `json:"name,omitempty"`
 	PeersCount int    `json:"peers_count,omitempty"`
@@ -40,7 +40,7 @@ type Peer struct {
 	LastSeen               string            `json:"last_seen,omitempty"`
 	Os                     string            `json:"os,omitempty"`
 	Version                string            `json:"version,omitempty"`
-	Groups                 []Groups          `json:"groups,omitempty"`
+	Groups                 []PeerGroup       `json:"groups,omitempty"`
 	SSHEnabled             bool              `json:"ssh_enabled,omitempty"`
 	UserID                 string            `json:"user_id,omitempty"`
 	Hostname               string            `json:"hostname,omitempty"`
