@@ -51,17 +51,30 @@ func (c *Client) ListGroups() (Groups, error) {
 	return groups, nil
 }
 
-func (c *Client) GetGroup(id string) (Group, error) {
-	group := Group{}
+func (c *Client) GetGroup(id string) (*Group, error) {
+	group := &Group{}
 	body, err := c.doCall(http.MethodGet, fmt.Sprintf("api/groups/%s", id), nil)
 	if err != nil {
-		return Group{}, err
+		return nil, err
 	}
-	err = json.Unmarshal(body, &group)
+	err = json.Unmarshal(body, group)
 	if err != nil {
-		return Group{}, err
+		return nil, err
 	}
 	return group, nil
+}
+
+func (c *Client) GetGroupByName(name string) (*Group, error) {
+	groups, err := c.ListGroups()
+	if err != nil {
+		return nil, err
+	}
+	for _, g := range groups {
+		if g.Name == name {
+			return &g, nil
+		}
+	}
+	return nil, fmt.Errorf("group not found")
 }
 
 func (c *Client) DeleteGroup(id string) error {
