@@ -1,0 +1,51 @@
+name: Release
+
+on:
+  workflow_run:
+    workflows: ["Lint Commit Messages"]
+    branches:
+      - main
+      - beta
+    types:
+      - completed
+
+jobs:
+  on-success:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "lts/*"
+
+      # - name: Set up Go 1.19
+      #   uses: actions/setup-go@v3
+      #   with:
+      #     go-version: 1.19
+
+      # - name: Run Tests
+      #   run: |
+      #     make test
+
+      # - name: Build the artifacts
+      #   run: |
+      #     make build
+
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_USER: siredmar
+        run: |-
+          #!/bin/bash
+          set -e
+          # add more plugins: https://semantic-release.gitbook.io/semantic-release/extending/plugins-list
+          npm install @semantic-release/exec @eclass/semantic-release-docker -D
+          # the ... || true is to prevent the script from failing caused by a bug in semantic-release regarding 
+          # rate limit changes on github. See https://github.com/semantic-release/github/pull/487
+          npx -c semantic-release || true
