@@ -30,12 +30,12 @@ type Route struct {
 	NetworkType string   `json:"network_type,omitempty"`
 	Description string   `json:"description,omitempty"`
 	NetworkID   string   `json:"network_id,omitempty"`
-	Enabled     string   `json:"enabled,omitempty"`
+	Enabled     bool     `json:"enabled,omitempty"`
 	Peer        string   `json:"peer,omitempty"`
 	PeerGroups  []string `json:"peer_groups,omitempty"`
 	Network     string   `json:"network,omitempty"`
-	Metric      string   `json:"metric,omitempty"`
-	Masquerade  string   `json:"masquerade,omitempty"`
+	Metric      int      `json:"metric,omitempty"`
+	Masquerade  bool     `json:"masquerade,omitempty"`
 	Groups      []string `json:"groups,omitempty"`
 }
 
