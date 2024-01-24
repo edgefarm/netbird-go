@@ -37,8 +37,8 @@ type GroupPeers struct {
 	Name string `json:"name,omitempty"`
 }
 
-func (c *Client) ListGroups() (Groups, error) {
-	groups := Groups{}
+func (c *Client) ListGroups() ([]Group, error) {
+	groups := []Group{}
 	body, err := c.doCall(http.MethodGet, "api/groups", nil)
 	if err != nil {
 		return nil, err
